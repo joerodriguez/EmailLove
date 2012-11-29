@@ -5,5 +5,5 @@ class DummyProvider(BaseProvider):
     def __init__(self):
         print "Init dummy"
 
-    def send(message):
+    def send(self, message):
         print "Dummy send"

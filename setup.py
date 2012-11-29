@@ -11,5 +11,7 @@ setup(
     license='LICENSE.txt',
     description='Useful mail provider stuff.',
     long_description=open('README.txt').read(),
-    install_requires=[],
+    install_requires=[
+        "requests==0.14.2"
+    ],
 )

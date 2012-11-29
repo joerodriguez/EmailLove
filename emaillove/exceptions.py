@@ -4,3 +4,5 @@ class EmailLoveException(RuntimeError):
 class NoCurrentProvider(EmailLoveException):
     pass
 
+class MissingMethod(EmailLoveException):
+    pass

@@ -1,7 +1,9 @@
+from emaillove.exceptions import MissingMethod
+
+
 class BaseProvider:
     def __init__(self):
-        print "Init base provider"
+        raise MissingMethod("Provider failed to override init")
 
-    def send(message):
-        ''' How this provider handles sending a message '''
-        print "Sending message"
+    def send(self, message):
+        raise MissingMethod("Provider failed to override send")

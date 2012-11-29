@@ -3,7 +3,6 @@ from emaillove.exceptions import NoCurrentProvider
 
 class EmailLove:
     def __init__(self):
-        print "Init Email Love"
         self.providers = []
         self.current_provider = None
 
@@ -14,5 +13,4 @@ class EmailLove:
                 self.current_provider = self.providers[0]
             else:
                 raise NoCurrentProvider("No current provider selected")
-        if self.current_provider is not None:
-            self.current_provider.send(message)
+        return self.current_provider.send(message)
