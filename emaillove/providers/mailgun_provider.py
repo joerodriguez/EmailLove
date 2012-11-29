@@ -21,13 +21,23 @@ class MailGun(BaseProvider):
         attachments = None
         if 'attachments' in message:
             files = () 
-            for filename, data in message['attachments'].items():
-                files += ((filename, data))
+            for filename, file_on_disk in message['attachments'].items():
+                f = open(file_on_disk, 'rb')
+                data = f.read()
+                f.close()
+                files += (filename, data)
             attachments = {'attachment': files}
+
+        to_final = []
+        for to in message['to']:
+            if to[1]:
+                to_final.append('<%s> %s' % (to[0], to[1]))
+            else:
+                to_final.append('%s' % (to[0]))
 
         payload = {
             'from': message['from'],
-            'to': ','.join(message['to']),
+            'to': ','.join(to_final),
             'subject': message['subject'],
             'text': message.get('text', ''),
             'html': message.get('html', ''),

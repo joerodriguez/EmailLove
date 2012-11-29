@@ -12,6 +12,7 @@ setup(
     description='Useful mail provider stuff.',
     long_description=open('README.txt').read(),
     install_requires=[
-        "requests==0.14.2"
+        "requests==0.14.2",
+        "sendgrid==0.1.3",
     ],
 )

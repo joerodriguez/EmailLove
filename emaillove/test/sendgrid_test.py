@@ -2,30 +2,30 @@ import os
 import unittest
 
 from emaillove import EmailLove
-from emaillove.providers.mailgun_provider import MailGun 
+from emaillove.providers.sendgrid_provider import SendGrid
 
 
-class TestMailGun(unittest.TestCase):
+class TestSendGrid(unittest.TestCase):
     def setUp(self):
         self.email_lover = EmailLove()
-        mailgun = MailGun(api_key=os.environ.get('MAILGUN_APIKEY'),
-                          domain=os.environ.get('MAILGUN_DOMAIN'))
-        self.email_lover.providers.append(mailgun)
+        sendgrid = SendGrid(username=os.environ.get('SENDGRID_USER'),
+                            password=os.environ.get('SENDGRID_PASS'))
+        self.email_lover.providers.append(sendgrid)
 
         self.from_email = os.environ.get('EMAILLOVE_FROM')
         self.to_email = os.environ.get('EMAILLOVE_TO')
         if self.to_email is None or self.from_email is None:
             raise RuntimeError("Please set from/to env variables")
 
-        self.subject = "EmailLove Mailgun Test"
+        self.subject = "EmailLove SendGrid Test"
 
     def test_send_html(self):
         result = self.email_lover.send({
             'subject': self.subject,
             'from': self.from_email, 
-            'to': [(self.to_email, '')],
-            'text': 'EmailLove mailgun text message',
-            'html': '<b>EmailLove</b> mailgun html <em>message</em>',
+            'to': [(self.to_email,'')],
+            'text': 'EmailLove sendgrid text message',
+            'html': '<b>EmailLove</b> sendgrid html <em>message</em>',
         })
         self.assertTrue(result)
 
@@ -33,8 +33,8 @@ class TestMailGun(unittest.TestCase):
         result = self.email_lover.send({
             'subject': self.subject,
             'from': self.from_email, 
-            'to': [(self.to_email, '')],
-            'text': 'EmailLove mailgun text message',
+            'to': [(self.to_email,'')],
+            'text': 'EmailLove sendgrid text message',
         })
         self.assertTrue(result)
 
@@ -47,10 +47,10 @@ class TestMailGun(unittest.TestCase):
             'subject': self.subject,
             'from': self.from_email, 
             'to': [(self.to_email, '')],
-            'text': 'EmailLove mailgun text message',
-            'html': '<b>EmailLove</b> mailgun attachment <em>message</em>',
+            'text': 'EmailLove sendgrid text message',
+            'html': '<b>EmailLove</b> sendgrid attachment <em>message</em>',
             'attachments':{
-                'testdoc.txt': '/tmp/testdoc.txt' 
+                'testdoc2.txt': '/tmp/testdoc.txt',
             }
         })
         self.assertTrue(result)
