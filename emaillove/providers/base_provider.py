@@ -7,3 +7,8 @@ class BaseProvider:
 
     def send(self, message):
         raise MissingMethod("Provider failed to override send")
+
+    def unsubscribes(self, start_date=None, end_date=None):
+        ''' Get the latest unsubscribes 
+        '''
+        return None 

@@ -1,7 +1,10 @@
+import sendgrid
+import requests
+import simplejson as json
+from time import gmtime, strftime
 
 from emaillove.providers.base_provider import BaseProvider
 from emaillove.exceptions import EmailLoveException
-import sendgrid
 
 
 class SendGridInitFailed(EmailLoveException):
@@ -34,3 +37,21 @@ class SendGrid(BaseProvider):
 
         ## smtp doesn't send attachments correctly but web wont send cc
         return s.web.send(sendgrid_message)
+
+    def unsubscribes(self, start_date=None, end_date=None):
+        if not end_date and start_date:
+            end_date = strftime("%Y-%m-%d", gmtime())
+        args = ['api_user=%s' % self.username, 'api_key=%s' % self.password,
+                'date=1']
+        if start_date:
+            args.append('start_date=%s' % start_date)
+            args.append('end_date=%s' % end_date)
+        url = ("https://sendgrid.com/api/unsubscribes.get.json?%s" % 
+               '&'.join(args))
+
+        r = requests.get(url)
+        r.response = r.text
+
+        if r.status_code == requests.codes.ok:
+            return json.loads(r.text)
+        return None

@@ -19,6 +19,10 @@ class TestSendGrid(unittest.TestCase):
 
         self.subject = "EmailLove SendGrid Test"
 
+    def test_unsubscribes(self):
+        results = self.email_lover.unsubscribes()
+        self.assertNotEqual(len(results), 0)
+
     def test_send_html(self):
         result = self.email_lover.send({
             'subject': self.subject,
