@@ -8,7 +8,7 @@ class EmailLove:
 
     def get_current_provider(self):
         if self.current_provider is None:
-            if len(self.providers) == 1:
+            if len(self.providers) > 0:
                 self.current_provider = self.providers[0]
             else:
                 raise NoCurrentProvider("No current provider selected")
